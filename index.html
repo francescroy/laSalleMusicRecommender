@@ -1,0 +1,497 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>La Salle Music Recomender</title>
+    
+    
+    <script type="text/javascript" src="LibreriaJS.js"></script>
+    <script type="text/javascript" src="Cancion.js"></script>
+    <script type="text/javascript" src="Artista.js"></script>
+    <link rel="stylesheet" type="text/css" href="newcss.css">
+        
+    
+</head>
+<body onload="funcioOnLoad()">
+  
+    
+    
+    <header>
+    
+    <h1> La Salle Music Recomender </h1>
+  
+    
+     
+    <div class="principal">
+        <input type="text" id="nom" class="input_text" /> 
+        <input type="radio" name="tipo" id="canco" checked="checked"  class="marge_dret"> Cancion
+        <input type="radio" name="tipo" id="album" class="marge_esq marge_dret"> Album 
+        <input type="radio" name="tipo" id="artista" class="marge_esq marge_dret" > Artista
+        
+        <button onclick="buscar()" class="btn boto_buscar" id="boto_buscar">Buscar</button>
+        <button onclick="masEscuchadas()" class="btn boto_mas_escuchadas" id="boto_mas_escuchadas">Mas escuchadas</button>
+        <button onclick="sugerencias()" class="btn boto_sugerencias" id="boto_sugerencias">Sugerencias</button>
+        <button onclick="playlist()" class="btn boto_playlist" id="boto_playlist">Playlist</button>
+        <a class="btn3 boto_registrar" id="boto_registrar" href="https://accounts.spotify.com/authorize?client_id=3c2452f87e91419fbaeee67262aba4e1&response_type=token&redirect_uri=http://192.168.1.35/Practica_Hipermedia_3/public_html/&scope=playlist-modify-public">Registrarse</a>
+        
+    </div>
+        
+    </header>    
+    
+    
+    
+    
+  <script>
+    
+    // Penjar-li a un Servidor real
+    
+    // Fitxer Virtual hosts modificar!!! Treure comentaris, de les altres webs
+    
+    // I amb el Mac de la Nuria que ja te modificat el fitxer de hosts,... puc posar hipermedia_2.dev
+    // El fitxer de hosts fa de dns server local
+    
+    // Mes o menys ja se com funciona el apache 
+    
+    
+    
+    var m1 = new MusicRecommender(); // Objeto principal
+    
+    var1 =  (window.location.href).split("#");
+    if(var1[1]!==undefined){
+        var2 =   var1[1].split("&");
+        var3 =   var2[0].split("="); 
+        m1.setAcces_token(var3[1]); 
+        document.getElementById("boto_registrar").onclick = function() {alert("Ya estas registrado.");document.getElementById("nom").focus();return false;};        
+    }
+    else{
+        document.getElementById("boto_buscar").onclick = function() {alert("Registrate.");document.getElementById("nom").focus();return false;};
+        document.getElementById("boto_mas_escuchadas").onclick = function() {alert("Registrate.");document.getElementById("nom").focus();return false;};
+        document.getElementById("boto_sugerencias").onclick = function() {alert("Registrate.");document.getElementById("nom").focus();return false;};
+        document.getElementById("boto_playlist").onclick = function() {alert("Registrate.");document.getElementById("nom").focus();return false;};
+    }
+    
+    
+                
+    if(m1.getAcces_token()!==null){
+        
+                var response = m1.newReleases();
+                m1.pintaAlbums(response);
+        
+    }
+    
+  
+    
+    
+    
+    
+    
+    
+      
+    
+    // FUNCIONES LISTENNERS... 
+    
+    function funcio_mes_info(param){
+          
+        var fieldset = document.getElementById(param).parentNode;
+          
+        document.getElementById(param).disabled = true;
+         
+        var response = m1.albumInfo(param);
+              
+        var info = document.createElement('p');
+            
+        info.setAttribute("class","p_mes_info");
+        
+        info.innerHTML="Artista: "+response.artists[0].name;
+            
+        var info2 = document.createElement('p');
+            
+        info2.setAttribute("class","p_mes_info");
+        
+        info2.innerHTML="Release date: "+ response.release_date;
+            
+        fieldset.appendChild(info);
+        fieldset.appendChild(info2); 
+          
+      }
+      
+    function funcio_cancons(param){
+        
+        var fieldset = document.getElementById(param+"_2").parentNode;
+              
+        document.getElementById(param+"_2").disabled = true;
+          
+        var response = m1.albumTracks(param);
+             
+        var index;
+        
+        for(index=0;index<response.items.length;index++){ 
+        
+            var recuadre = document.createElement('div');
+            
+            recuadre.setAttribute("class","recuadre_funcio_mes_cancons");
+        
+            var audio = document.createElement('audio');
+        
+            audio.setAttribute("controls","controls");
+            
+            audio.setAttribute("onplay","funcio_reproduccio(\""+response.items[index].id+"\")");
+            
+            audio.setAttribute("class","audio_mes_cancons");
+        
+            var source = document.createElement('source');
+        
+            source.setAttribute("src",response.items[index].preview_url);
+        
+            audio.appendChild(source);
+            
+            var info = document.createElement('p');
+        
+            info.innerHTML="Cancion: "+ response.items[index].name;
+            
+            info.setAttribute("class","info_mes_cancons");
+        
+            recuadre.appendChild(audio);
+            recuadre.appendChild(info);
+            fieldset.appendChild(recuadre);
+            
+    
+        }
+    
+    
+    
+    
+          
+          
+    } 
+      
+    function funcio_albums(param){
+        
+        document.getElementById("nom").focus();
+        
+        var array = document.getElementsByName("borrar");
+        
+            while(array.length!==0){
+        
+                document.body.removeChild(array[0]);
+        
+                array = document.getElementsByName("borrar");
+        
+            }
+          
+        var response = m1.getArtistAlbums(param);
+                
+        m1.pintaAlbumsArtista(response);
+            
+            
+    
+        }
+    
+    function funcio_reproduccio(param){ 
+        
+        
+        var ja_hi_era=false;
+        
+        var llista_cancons = [];
+        
+        while(m1.getLlista_cancons().length!==0){
+            
+            var canc_temp = m1.getLlista_cancons().pop();
+            
+            if(canc_temp.getId()===param){canc_temp.setNum_reproducciones(canc_temp.getNum_reproducciones()+1); ja_hi_era=true;}
+            
+            llista_cancons.push(canc_temp);
+            
+        }
+        
+        m1.setLlista_cancons(llista_cancons);
+        
+        
+        if(ja_hi_era===false){
+            
+            var response = m1.getTrack(param);
+            var c1 = new Cancion();
+            c1.setId(param);
+            c1.setTitulo(response.name);
+            c1.setArtista(response.artists[0].name);
+            c1.setArtista_id(response.artists[0].id);
+            c1.setAlbum(response.album.name);
+            c1.setNum_reproducciones(1);
+            
+            m1.getLlista_cancons().push(c1);
+            
+        }
+        
+    }
+    
+    function masEscuchadas(){
+        
+        document.getElementById("nom").focus();
+        
+        // El seguent sera fer una classe artista i cada cop que es reprodueixi una +1 en les reproduccions d'aquell artista...
+        // Per quedar-me despres amb l'artista mes escoltat en el moment de Sugerencias
+        
+        if(m1.getLlista_cancons().length!==0){
+        
+        
+            var llista_can_ordenades = [];
+            
+            
+        
+            while(m1.getLlista_cancons().length!==0){
+        
+                var pos=0;
+        
+                var canco = m1.getLlista_cancons()[0];
+                var index;
+                for(index=1;index<m1.getLlista_cancons().length;index++){
+                    if(m1.getLlista_cancons()[index].getNum_reproducciones() > canco.getNum_reproducciones()){
+                        canco = m1.getLlista_cancons()[index];
+                        
+                        pos=index;
+                    }
+                }
+                
+                llista_can_ordenades.push(canco);
+                m1.getLlista_cancons().splice(pos, 1);
+         
+            }
+            
+            m1.setLlista_cancons(llista_can_ordenades);
+        
+        
+            var array = document.getElementsByName("borrar");
+        
+            while(array.length!==0){
+        
+                document.body.removeChild(array[0]);
+        
+                array = document.getElementsByName("borrar");
+        
+            }
+            var index_2;
+            
+            for(index_2=0;index_2<m1.getLlista_cancons().length;index_2++){
+                
+                m1.pintaCanco(m1.getLlista_cancons()[index_2]);
+                
+            }
+        
+            
+        }    
+    }
+    
+    function sugerencias(){
+        
+        document.getElementById("nom").focus();
+        
+        if(m1.getLlista_cancons().length!==0){
+        
+            var array = document.getElementsByName("borrar");
+            while(array.length!==0){
+                document.body.removeChild(array[0]);
+                array = document.getElementsByName("borrar");
+            }
+            
+            
+            
+            
+            
+            var artistas = []; 
+            
+            var index, index_2;
+            for(index=0;index<m1.getLlista_cancons().length;index++){
+                
+                var trobat = false;
+                for(index_2=0;index_2<artistas.length;index_2++){
+                    
+                    if(m1.getLlista_cancons()[index].getArtista_id()===artistas[index_2].getId()){
+                        
+                        artistas[index_2].aumentaReproducciones(m1.getLlista_cancons()[index].getNum_reproducciones());  
+                        trobat=true;
+                        break;
+                        
+                    }
+                    
+                }
+                
+                if(trobat===false){
+                    
+                    var art = new Artista();
+                    
+                    art.aumentaReproducciones(m1.getLlista_cancons()[index].getNum_reproducciones());
+                    art.setId(m1.getLlista_cancons()[index].getArtista_id());
+                    artistas.push(art);
+                    
+                }
+            }
+            
+            
+            var artista_mas_escuchado = artistas[0];
+            
+            for(index=1;index<artistas.length;index++){
+                
+                if(artistas[index].getNum_reproducciones() > artista_mas_escuchado.getNum_reproducciones()){
+                    
+                    artista_mas_escuchado = artistas[index];
+                    
+                }
+                
+            }
+            
+            
+            m1.pintaArtists2(m1.artistasRelacionados(artista_mas_escuchado.getId()));
+            
+            
+        
+        
+            
+        }
+    }
+      
+    function playlist(){
+        
+        document.getElementById("nom").focus();
+        
+        var playlists = m1.retornaPlaylists();
+        
+        if(playlists.items.length!==0){
+         
+            var array = document.getElementsByName("borrar");
+            while(array.length!==0){
+                document.body.removeChild(array[0]);
+                array = document.getElementsByName("borrar");
+            }
+            
+        m1.pintaPlaylists(playlists);    
+            
+        }
+        
+    }
+    
+    function funcio_playlist_per_defecte(param){
+        
+        
+        document.getElementById(param+"_2").blur();
+        
+        m1.setId_llista_actual(param);
+        
+        
+        
+        
+    }
+    
+    function funcio_afegir_a_playlist(param){
+        
+        document.getElementById(param).blur();
+        
+        if(m1.getId_llista_actual()!==null){
+            
+            m1.inserirCancion(param);
+            
+        }else{
+            
+            alert("Selecciona una playlist antes.");
+            
+        }
+        
+        
+    }
+      
+    function buscar (){
+        
+        
+        
+        document.getElementById("nom").focus();
+        
+        if(document.getElementById("nom").value!==""){
+            
+            
+            
+            var array = document.getElementsByName("borrar");
+        
+            while(array.length!==0){
+        
+                document.body.removeChild(array[0]);
+        
+                array = document.getElementsByName("borrar");
+        
+            }
+            
+            
+            if(document.getElementById("canco").checked){
+                
+                var response = m1.searchCancons(document.getElementById("nom").value);
+                
+                m1.pintaCancons(response);
+            
+            }
+            
+            else if(document.getElementById("album").checked){
+            
+                var response = m1.searchAlbums(document.getElementById("nom").value);
+                
+                m1.pintaAlbums(response);
+                
+                
+            
+            }
+            else if(document.getElementById("artista").checked){
+                
+                var response = m1.searchArtists(document.getElementById("nom").value);
+                
+                m1.pintaArtists(response);
+                
+                
+            }
+        
+          
+        }
+        
+    }
+      
+    function funcio_crear_playlist(){
+      
+        document.getElementById("nom").focus();
+        
+        if(document.getElementById("nom_playlist_a_crear").value!==""){
+        
+        m1.creaPlaylist((m1.recuperaIdUsuari().id),document.getElementById("nom_playlist_a_crear").value);
+        
+        playlist();
+        
+        }else{
+            
+            alert("Escribe un nombre para la playlist.");
+            
+        }
+    }  
+      
+    function funcio_canciones_playlist (param){
+        
+       document.getElementById("nom").focus();
+       
+       var array = document.getElementsByName("borrar");
+        while(array.length!==0){
+            document.body.removeChild(array[0]);
+            array = document.getElementsByName("borrar");
+        }
+       
+       m1.pintaCanconsPlaylist(m1.retornaCanconsPlaylist(param));
+        
+    }  
+    
+    function funcioOnLoad(){
+        
+        document.getElementById("nom").focus();
+        
+    }
+    
+    
+      
+      
+  </script>
+  
+</body>
+</html>

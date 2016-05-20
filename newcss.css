@@ -1,0 +1,369 @@
+
+.btn {
+  
+    background: #3498db;
+    background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+    background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+    background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+    background-image: -o-linear-gradient(top, #3498db, #2980b9);
+    background-image: linear-gradient(to bottom, #3498db, #2980b9);
+    -webkit-border-radius: 7;
+    -moz-border-radius: 7;
+    border-radius: 7px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 14px;
+    padding: 10px 20px 10px 20px;
+    border: solid #1f628d 0px;
+    text-decoration: none;
+    width: 25%;
+    height: 140px;
+    font-size: 30px;
+    
+}
+
+
+.btn:hover {
+  
+    background: #3cb0fd;
+    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+    text-decoration: none;
+}
+
+.btn2 {
+  
+    background: #3498db;
+    background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+    background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+    background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+    background-image: -o-linear-gradient(top, #3498db, #2980b9);
+    background-image: linear-gradient(to bottom, #3498db, #2980b9);
+    -webkit-border-radius: 6;
+    -moz-border-radius: 6;
+    border-radius: 6px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 12px;
+    padding: 10px 20px 10px 20px;
+    border: solid #1f628d 0px;
+    text-decoration: none;
+    height: 90px;
+    font-size: 30px;
+}
+
+.btn2:hover {
+    background: #3cb0fd;
+    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+    text-decoration: none;
+}
+
+.btn3 {
+  
+    background: #3498db;
+    background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+    background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+    background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+    background-image: -o-linear-gradient(top, #3498db, #2980b9);
+    background-image: linear-gradient(to bottom, #3498db, #2980b9);
+    -webkit-border-radius: 7;
+    -moz-border-radius: 7;
+    border-radius: 7px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 14px;
+    padding: 10px 20px 10px 20px;
+    border: solid #1f628d 0px;
+    text-decoration: none;
+    width: 25%;
+    padding: 50px;
+    font-size: 30px;
+    
+}
+
+.btn3:hover {
+  
+    background: #3cb0fd;
+    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+    text-decoration: none;
+}
+
+
+
+h1{
+    text-align: center; 
+    font-family: Helvetica; 
+    margin-top: 70px;
+    font-size: 70px;
+    
+}
+
+.principal{
+    
+    text-align: center; 
+    font-family: helvetica; 
+    margin-top: 50px;
+    
+}
+
+ 
+
+.input_text{
+    
+   
+    display: block;
+    height: 70px;
+    font-size: 40px;
+    margin: auto;
+    width: 45%;
+    margin-bottom: 70px;
+    
+    
+}
+
+.boto_buscar{
+    
+    display: block;
+    margin: auto;
+    margin-top: 105px;
+    margin-bottom: 8px;
+    
+}
+
+.boto_mas_escuchadas{
+    
+    
+    display: block;
+    margin: auto;
+    margin-bottom: 8px;
+    
+}
+
+.boto_registrar{
+    
+    display: block; 
+    margin: auto; 
+    margin-top: 78px;
+    margin-bottom: 40px;
+    
+}
+
+.recuadre_albums{
+    
+    width:70%;
+    text-align:center; 
+    margin:auto; 
+    margin-top:80px;
+    
+    
+}
+
+.info_albums{
+    
+    display:block;
+    margin:auto;
+    font-family: Helvetica;
+    font-size:30px;
+    
+}
+
+.img_albums{
+    
+    display:block; 
+    margin:auto;
+    width:50%;
+    margin-bottom:15px;
+    
+    
+}
+
+
+.boto_1_albums{
+    
+    display:block; 
+    margin:auto;
+    width:50%; 
+    margin-bottom:5px; 
+    margin-top:15px;
+    
+}
+
+.boto_2_albums{
+    
+    display:block; 
+    margin:auto;
+    width:50%;
+    margin-bottom: 50px;
+    
+}
+
+body{
+    
+    padding-bottom: 150px;
+    
+}
+
+
+.p_mes_info{
+    
+    font-family:helvetica;
+    font-size: 30px;
+    
+    
+}
+
+
+.recuadre_funcio_mes_cancons{
+    
+    width: 45%; 
+    display:block; 
+    margin:auto; 
+    margin-top:15px;
+    
+}
+
+.audio_mes_cancons{
+    
+    margin-top:10px;
+    
+}
+
+.info_mes_cancons{
+    
+    font-family:helvetica;
+    font-size: 30px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    
+    
+}
+
+.style_canco{
+    
+    width:70%;
+    text-align:center; 
+    margin:auto; 
+    margin-top:80px;
+    
+    
+}
+
+.audio_canco{
+    
+    display:block;
+    margin:auto;
+    margin-top:25px; 
+    margin-bottom:130px;
+    
+    
+    
+}
+
+.info_canco{
+    
+    display:block;
+    margin:auto; 
+    margin-top:25px;
+    font-family: Helvetica;
+    font-size: 30px;
+    
+    
+}
+
+.imatge_canco{
+    
+    display:block; 
+    margin:auto;
+    width:50%
+    
+    
+}
+
+.boto_sugerencias{
+    
+    
+    display: block;
+    margin: auto;
+    margin-bottom: 8px; 
+    
+}
+
+.boto_playlist{
+    
+    
+    display: block;
+    margin: auto; 
+    
+}
+
+.boto_canco{
+    
+    display:block; 
+    margin:auto;
+    width:50%;
+    margin-bottom: 10px;
+    
+    
+    
+}
+
+
+.input_playlist{
+    
+    width: 50%;
+    height: 70px;
+    font-size: 40px;
+    
+    
+    
+}
+
+
+input[type='radio'] {
+    transform: scale(3.7);
+}
+
+
+audio{
+     
+    transform: scale(2.5);
+    
+    
+}
+
+header{
+    
+    font-size: 30px;
+    
+    
+}
+
+.marge_esq{
+    
+    margin-left: 50px;
+    
+}
+
+.marge_dret{
+    
+    margin-right: 15px;
+    
+    
+}
+
+.info_3{
+    
+    margin-bottom: 60px;
+    
+}
